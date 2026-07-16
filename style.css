@@ -850,4 +850,56 @@ input:focus, select:focus {
         margin-top: 4px;
     }
 
+    /* --- 6. Sistem Navigasi Sidebar (Laci Samping) --- */
+
+    /* Tombol Hamburger di Pojok Atas Header Mobile */
+    .menu-toggle-btn {
+        display: block !important; /* Kita paksa muncul hanya di layar HP */
+        font-size: 24px;
+        background: none;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001; /* Di atas segalanya */
+    }
+
+    /* Mengubah Sidebar PC Menjadi Laci Tersembunyi */
+    .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: -280px; /* Kita geser keluar layar sebelah kiri agar sembunyi */
+        width: 260px;
+        height: 100vh;
+        background-color: #1e293b !important; /* Senada dengan tema gelap */
+        z-index: 9999; /* Sangat tinggi agar menutupi konten utama saat terbuka */
+        transition: left 0.3s ease-in-out; /* Animasi geser yang mulus */
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Kelas aktif ketika tombol menu diklik (diaktifkan lewat JavaScript) */
+    .sidebar.active {
+        left: 0; /* Menggeser kembali sidebar ke dalam layar */
+    }
+
+    /* Efek Gelap Transparan di Layar Belakang saat Menu Terbuka */
+    .sidebar-overlay {
+        display: none; /* Default tersembunyi */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.75); /* Warna dasar gelap transparan */
+        backdrop-filter: blur(4px); /* Efek blur estetik pada background */
+        z-index: 9998; /* Berada tepat di bawah sidebar, tapi di atas konten utama */
+    }
+
+    /* Aktifkan overlay saat menu terbuka */
+    .sidebar-overlay.active {
+        display: block;
+    }
+
 }
