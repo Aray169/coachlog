@@ -720,178 +720,134 @@ input:focus, select:focus {
 }
 
 /* =======================================================
-   📱 STYLING PREMIUM MOBILE - HIDDEN DRAWER (MATERIAL 3)
+   📱 KODE KHUSUS UNTUK TAMPILAN HP (MOBILE-FIRST)
+   Semua kode di dalam kurung kurawal ini HANYA akan aktif 
+   saat CoachLog dibuka di layar HP (maksimal lebar 768px).
    ======================================================= */
 @media (max-width: 768px) {
-    /* 1. Atur layout body agar tidak bergeser */
+
+   /* --- 1. Reset Margin & Layout Kontainer Utama --- */
     body {
-        overflow-x: hidden;
+        font-size: 14px;
+        background-color: #0f172a; /* Warna gelap premium tetap konsisten */
+        overflow-x: hidden; /* Mencegah layar bisa digeser ke kanan-kiri */
     }
 
-    .wrapper, .container {
-        flex-direction: column !important;
-        display: flex !important;
+    .container {
+        width: 100% !important;
+        max-width: 480px; /* Batasi lebar maksimal seukuran HP */
+        margin: 0 auto;
+        padding: 16px;
+        box-sizing: border-box;
     }
 
-    /* 2. BUAT HEADER BAR BARU DI ATAS (Tempat Logo & Tombol Menu) */
-    .mobile-header {
-        display: flex !important;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #0f172a; /* Warna gelap senada */
-        padding: 15px 20px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 60px;
-        z-index: 999;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    /* Logo di Header Mobile */
-    .mobile-logo {
-        font-size: 1.2rem;
-        font-weight: 800;
-        color: #ffffff;
+    /* --- 2. Ubah Form Menjadi 1 Kolom Vertikal --- */
+    /* Jika sebelumnya ada pembagian kolom (grid/flex) berdampingan, kita paksa turun ke bawah */
+    .form-group, .form-row {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        width: 100% !important;
         gap: 8px;
+        margin-bottom: 14px;
     }
 
-    /* Tombol Hamburger (☰) */
-    .menu-toggle-btn {
-        background: none;
-        border: none;
-        color: #ffffff;
-        font-size: 24px;
-        cursor: pointer;
-        padding: 5px;
+    /* --- 3. Perbesar Area Sentuh Kolom Input (Touch Target) --- */
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        width: 100% !important;
+        height: 48px !important; /* Standar emas tinggi tombol/input di HP */
+        font-size: 15px !important; /* Menghindari auto-zoom otomatis di Safari/iOS */
+        border-radius: 12px !important; /* Sudut membulat modern */
+        padding: 10px 14px !important;
+        border: 1px solid #334155 !important;
+        background-color: #1e293b !important; /* Warna input senada PC */
+        color: #ffffff !important;
+        box-sizing: border-box;
+    }
+
+    /* Khusus untuk textarea agar bisa memuat tulisan lebih banyak */
+    textarea {
+        height: auto !important;
+        min-height: 100px !important;
+    }
+
+    /* --- 4. Desain Ulang Tombol Agar Ergonomis --- */
+    button, 
+    .btn, 
+    .btn-submit {
+        width: 100% !important;
+        height: 50px !important; /* Tebal dan mantap ditekan jempol */
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        border-radius: 12px !important;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: auto !important;
-        min-height: auto !important;
+        gap: 8px;
+        box-sizing: border-box;
+        margin-top: 8px;
     }
 
-    /* 3. UBAH SIDEBAR MENJADI LACI GESER (HIDDEN DRAWER) */
-    .sidebar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 280px !important; /* Lebar laci */
-        height: 100vh !important; /* Tinggi penuh layar HP */
-        background-color: #1e293b !important; /* Gelap solid */
-        z-index: 10000 !important;
-        padding: 25px 20px !important;
-        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
-        
-        /* EFEK GESER: Secara default disembunyikan di luar layar kiri (-280px) */
-        transform: translateX(-100%) !important;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    /* --- 5. Mengubah Tabel Menjadi Sistem Card (Kartu) --- */
+    
+    /* Sembunyikan header tabel asli PC (Nama, Program, Hari, dll) karena tidak muat */
+    table thead {
+        display: none;
     }
 
-    /* Ketika sidebar aktif, geser masuk ke dalam layar */
-    .sidebar.active {
-        transform: translateX(0) !important;
-    }
-
-    /* Tampilkan kembali logo dan profil di dalam laci geser dengan rapi */
-    .sidebar h2, .sidebar .logo {
-        font-size: 1.3rem !important;
-        margin-bottom: 25px !important;
-    }
-
-    .sidebar-menu {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 8px !important;
-        margin-top: 15px !important;
-    }
-
-    .sidebar-menu a {
-        display: flex !important;
-        width: 100% !important;
-        padding: 12px 16px !important;
-        font-size: 15px !important;
-        border-radius: 8px !important;
-        margin-bottom: 0 !important;
-    }
-
-    .sidebar-profile {
-        margin-top: 30px !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        padding-top: 15px !important;
-    }
-
-    /* 4. OVERLAY (Layar Gelap di belakang Laci saat menu terbuka) */
-    .sidebar-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 9999;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .sidebar-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* 5. SESUAIKAN KONTEN UTAMA (Diturunkan sedikit agar tidak tertutup Header Atas) */
-    .main-content, .content, main {
-        width: 100% !important;
-        padding: 20px 15px !important;
-        margin-left: 0 !important;
-        margin-top: 60px !important; /* Jarak pas di bawah Mobile Header */
-    }
-
-    .page-header h2 {
-        font-size: 1.5rem !important;
-    }
-
-    /* 6. Form & Tombol Nyaman */
-    .form-group {
+    /* Ubah elemen tabel utama agar memakan ruang penuh */
+    table, tbody {
+        display: block;
         width: 100% !important;
     }
 
-    input, select, textarea, button {
+    /* Setiap baris tabel (TR) sekarang menjelma menjadi satu KARTU (Card) */
+    table tr {
+        display: block;
+        background-color: #1e293b; /* Warna latar kartu sedikit lebih terang dari background */
+        border: 1px solid #334155;
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 16px; /* Jarak antar kartu */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Setiap kolom data (TD) di dalam kartu disusun berbaris ke bawah */
+    table td {
+        display: flex;
+        justify-content: space-between; /* Menjaga label di kiri, isi data di kanan */
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dashed #334155; /* Garis pembatas tipis antar data di dalam kartu */
+        font-size: 14px;
+        color: #e2e8f0;
+        text-align: right;
+    }
+
+    /* Hilangkan garis pembatas di data paling bawah dalam kartu */
+    table td:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    /* Trik CSS: Memunculkan label penanda secara otomatis di sebelah kiri setiap data */
+    table td::before {
+        content: attr(data-label); /* Mengambil label dari atribut HTML (jika ada) */
+        font-weight: 600;
+        color: #94a3b8; /* Warna abu-abu teks label */
+        text-align: left;
+        padding-right: 10px;
+    }
+
+    /* Jika ada tombol aksi di dalam tabel (seperti hapus/kirim WA), buat melebar penuh */
+    table td .btn-action, 
+    table td button {
         width: 100% !important;
-        min-height: 44px; 
-        font-size: 16px !important; 
+        height: 40px !important;
+        margin-top: 4px;
     }
 
-    .table-container, .table-responsive {
-        width: 100% !important;
-        overflow-x: auto !important; 
-        -webkit-overflow-scrolling: touch;
-        margin-bottom: 20px;
-        border-radius: 8px;
-    }
-
-    table {
-        min-width: 600px; 
-    }
-
-    .button-group, .action-buttons {
-        flex-direction: column !important;
-        gap: 10px !important;
-    }
-
-    .btn-wa, .btn-pdf, .btn-primary {
-        width: 100% !important;
-        justify-content: center;
-    }
-}
-
-/* Sembunyikan Header Mobile di versi Desktop */
-@media (min-width: 769px) {
-    .mobile-header, .sidebar-overlay {
-        display: none !important;
-    }
 }
