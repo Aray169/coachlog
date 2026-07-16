@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     
-    <!-- 🚀 TAMBAHKAN 4 BARIS INI AGAR FULL-SCREEN APLIKASI DI HP -->
+    <!-- 🚀 FULL-SCREEN APLIKASI DI HP -->
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,8 +17,11 @@
 </head>
 <body>
 
-    <!-- SIDEBAR NAVIGATION -->
-    <div class="sidebar">
+    <!-- 1. OVERLAY LATAR BELAKANG (Aktif saat laci menu HP terbuka) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- 2. SIDEBAR NAVIGATION (Laci Menu Samping) -->
+    <div class="sidebar" id="sidebarMenu">
         <div>
             <div class="brand">
                 <i class='bx bx-dumbbell'></i>
@@ -62,28 +65,39 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTENT -->
-    <div class="main-content">
-        <div class="page-header">
-            <h2>Input Laporan Latihan</h2>
-            <p>Buat rincian program latihan berkala dan langsung kirimkan nota ke WhatsApp klien.</p>
+    <!-- 3. MAIN APP CONTENT -->
+    <!-- Menambahkan class "container" agar selaras dengan reset layout di CSS HP-mu -->
+    <div class="main-content container">
+        
+        <div class="page-header" style="display: flex; align-items: center; gap: 12px;">
+            <!-- Tombol Hamburger untuk HP (Boxicons) -->
+            <button class="menu-toggle-btn" id="menuToggleBtn" style="display: none;">
+                <i class='bx bx-menu'></i>
+            </button>
+            <div>
+                <h2>Input Laporan Latihan</h2>
+                <p>Buat rincian program latihan berkala dan langsung kirimkan nota ke WhatsApp klien.</p>
+            </div>
         </div>
+
         <div class="panel">
             
-           <div class="form-group">
-    <label for="client-select">Pilih Klien</label>
-    <!-- Diubah menjadi dropdown dinamis -->
-    <select id="client-select" onchange="autoFillNomorWA()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-family: 'Inter', sans-serif;">
-        <option value="">-- Pilih Klien Terdaftar --</option>
-    </select>
-</div>
+            <!-- Mengelompokkan input klien & nomor WA ke dalam form-row agar adaptif -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="client-select">Pilih Klien</label>
+                    <select id="client-select" onchange="autoFillNomorWA()">
+                        <option value="">-- Pilih Klien Terdaftar --</option>
+                    </select>
+                </div>
 
-<div class="form-group" style="margin-top: 15px;">
-    <label for="client-phone">Nomor WA Klien</label>
-    <!-- Diberikan tambahan color: #1e293b (warna teks gelap) agar terbaca jelas -->
-    <input type="text" id="client-phone" placeholder="Otomatis terisi..." readonly style="background-color: #e2e8f0; color: #1e293b; font-weight: 500; cursor: not-allowed; border: 1px solid #cbd5e1;">
-</div>
+                <div class="form-group">
+                    <label for="client-phone">Nomor WA Klien</label>
+                    <input type="text" id="client-phone" placeholder="Otomatis terisi..." readonly>
+                </div>
+            </div>
 
+            <!-- FORM TABLE: Pembungkus Scroll Horizontal (Di HP tetap bisa digeser tanpa merusak layar) -->
             <div class="table-container">
                 <table class="session-table">
                     <thead>
@@ -108,19 +122,37 @@
                 <span class="total-price" id="total-biaya">Rp 0</span>
             </div>
 
-            <!-- Tambahkan ini tepat di bawah <div class="panel"> -->
-<input type="hidden" id="edit-draft-id" value="">
+            <input type="hidden" id="edit-draft-id" value="">
 
-<!-- Ganti bagian tombol bawah di input.html menjadi seperti ini -->
-<div class="action-buttons-container" style="margin-top: 24px;">
-    <button type="button" class="btn-submit" onclick="simpanKeDaftarProgram()" style="background-color: #3b82f6; width: 100%;">
-        <i class='bx bx-save' style="font-size: 20px;"></i> Simpan ke Draft
-    </button>
-</div>
+            <div class="action-buttons-container" style="margin-top: 24px;">
+                <button type="button" class="btn-submit" onclick="simpanKeDaftarProgram()" style="background-color: #3b82f6; width: 100%;">
+                    <i class='bx bx-save' style="font-size: 20px;"></i> Simpan ke Draft
+                </button>
+            </div>
 
         </div>
     </div>
 
+    <!-- Script Sederhana untuk mengontrol Laci Navigasi di HP -->
+    <script>
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggleBtn = document.getElementById('menuToggleBtn');
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+        }
+
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
