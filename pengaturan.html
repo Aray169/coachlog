@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Report — CoachLog</title>
+    <title>Pengaturan — CoachLog</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     
-    <!-- 🚀 TAMBAHKAN 4 BARIS INI AGAR FULL-SCREEN APLIKASI DI HP -->
+    <!-- FULL-SCREEN APLIKASI DI HP -->
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,14 +17,16 @@
 </head>
 <body>
 
+    <!-- OVERLAY LATAR BELAKANG -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- SIDEBAR NAVIGATION -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebarMenu">
         <div>
             <div class="brand">
                 <i class='bx bx-dumbbell'></i>
                 <span>CoachLog.</span>
             </div>
-            
             <ul class="menu-list">
                 <li>
                     <a href="index.html" class="menu-item">
@@ -52,7 +54,6 @@
                 </li>
             </ul>
         </div>
-
         <div class="user-profile">
             <i class='bx bxs-user-circle'></i>
             <div class="user-info">
@@ -63,35 +64,60 @@
     </div>
 
     <!-- MAIN APP CONTENT -->
-    <div class="main-content">
-        <div class="page-header">
-            <h2>Pengaturan Sistem</h2>
-            <p>Kelola profil instansi coach dan preferensi pesan otomatis dashboard.</p>
+    <div class="main-content container">
+        <div class="page-header" style="display: flex; align-items: center; gap: 12px;">
+            <button class="menu-toggle-btn" id="menuToggleBtn" style="display: none;">
+                <i class='bx bx-menu'></i>
+            </button>
+            <div>
+                <h2>Pengaturan Sistem</h2>
+                <p>Konfigurasi profil personal Anda dan template pesan WhatsApp.</p>
+            </div>
         </div>
-        
+
         <div class="panel">
-            <div class="form-group">
-                <label>Nama Head Coach</label>
-                <input type="text" id="input-head-coach" placeholder="Contoh: Coach Rafaeldo">
+            <h3 style="margin-bottom: 16px; font-size: 16px;">Profil Coach</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="coach-name">Nama Lengkap</label>
+                    <input type="text" id="coach-name" placeholder="Contoh: Head Coach">
+                </div>
+                <div class="form-group">
+                    <label for="coach-title">Jabatan / Spesialisasi</label>
+                    <input type="text" id="coach-title" placeholder="Contoh: Personal Trainer / PJOK Guru">
+                </div>
             </div>
             
             <div class="form-group">
-                <label>Nama Gym / Studio / Kursus</label>
-                <input type="text" id="input-nama-kursus" placeholder="Contoh: Private Fitness Studio Inc.">
-            </div>
-            
-            <div class="form-group">
-                <label>Default Currency & Format</label>
-                <input type="text" value="IDR (Rp) - Indonesian Rupiah" disabled style="opacity: 0.6;">
+                <label for="wa-template">Default Template Pesan WA</label>
+                <textarea id="wa-template" style="min-height: 150px;">Halo [NamaKlien], berikut rincian program latihan Anda...</textarea>
             </div>
 
-            <!-- Tombol Simpan Modern -->
-            <button onclick="simpanPengaturan()" style="background: #25D366; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 8px; margin-top: 10px;">
-                <i class='bx bx-save' style="font-size: 1.2rem;"></i> Simpan Pengaturan
+            <button type="button" class="btn" onclick="simpanPengaturan()" style="background-color: #3b82f6; color: white;">
+                <i class='bx bx-save'></i> Simpan Pengaturan
             </button>
         </div>
     </div>
 
+    <script>
+        // Script Laci Menu HP
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggleBtn = document.getElementById('menuToggleBtn');
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+        }
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
