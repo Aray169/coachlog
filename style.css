@@ -726,7 +726,7 @@ input:focus, select:focus {
    ======================================================= */
 @media (max-width: 768px) {
 
-   /* --- 1. Reset Margin & Layout Kontainer Utama --- */
+    /* --- 1. Reset Margin & Layout Kontainer Utama --- */
     body {
         font-size: 14px;
         background-color: #0f172a; /* Warna gelap premium tetap konsisten */
@@ -742,7 +742,6 @@ input:focus, select:focus {
     }
 
     /* --- 2. Ubah Form Menjadi 1 Kolom Vertikal --- */
-    /* Jika sebelumnya ada pembagian kolom (grid/flex) berdampingan, kita paksa turun ke bawah */
     .form-group, .form-row {
         display: flex;
         flex-direction: column;
@@ -754,6 +753,8 @@ input:focus, select:focus {
     /* --- 3. Perbesar Area Sentuh Kolom Input (Touch Target) --- */
     input[type="text"],
     input[type="number"],
+    input[type="tel"],
+    input[type="date"],
     select,
     textarea {
         width: 100% !important;
@@ -790,116 +791,117 @@ input:focus, select:focus {
         margin-top: 8px;
     }
 
-    /* --- 5. Mengubah Tabel Menjadi Sistem Card (Kartu) --- */
+    /* --- 5. Mengubah DATA TABEL Menjadi Sistem Card (Kartu) --- */
+    /* HANYA diterapkan pada .data-table (Riwayat/Klien), tidak merusak tabel form (.main-table/.session-table) */
     
-    /* Sembunyikan header tabel asli PC (Nama, Program, Hari, dll) karena tidak muat */
-    table thead {
-        display: none;
+    .data-table thead {
+        display: none; /* Sembunyikan header tabel asli PC */
     }
 
-    /* Ubah elemen tabel utama agar memakan ruang penuh */
-    table, tbody {
+    .data-table, 
+    .data-table tbody, 
+    .data-table tr, 
+    .data-table td {
         display: block;
         width: 100% !important;
     }
 
-    /* Setiap baris tabel (TR) sekarang menjelma menjadi satu KARTU (Card) */
-    table tr {
-        display: block;
-        background-color: #1e293b; /* Warna latar kartu sedikit lebih terang dari background */
+    /* Setiap baris data-table menjelma jadi kartu */
+    .data-table tr {
+        background-color: #1e293b;
         border: 1px solid #334155;
         border-radius: 16px;
         padding: 16px;
-        margin-bottom: 16px; /* Jarak antar kartu */
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        margin-bottom: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
-    /* Setiap kolom data (TD) di dalam kartu disusun berbaris ke bawah */
-    table td {
+    /* Baris data di dalam kartu */
+    .data-table td {
         display: flex;
-        justify-content: space-between; /* Menjaga label di kiri, isi data di kanan */
+        justify-content: space-between; /* Kiri: label, Kanan: isi */
         align-items: center;
-        padding: 8px 0;
-        border-bottom: 1px dashed #334155; /* Garis pembatas tipis antar data di dalam kartu */
+        padding: 10px 0;
+        border-bottom: 1px dashed #334155;
         font-size: 14px;
         color: #e2e8f0;
         text-align: right;
     }
 
-    /* Hilangkan garis pembatas di data paling bawah dalam kartu */
-    table td:last-child {
+    .data-table td:last-child {
         border-bottom: none;
         padding-bottom: 0;
-        margin-bottom: 0;
     }
 
-    /* Trik CSS: Memunculkan label penanda secara otomatis di sebelah kiri setiap data */
-    table td::before {
-        content: attr(data-label); /* Mengambil label dari atribut HTML (jika ada) */
+    /* Memunculkan label dari atribut data-label di HTML */
+    .data-table td::before {
+        content: attr(data-label);
         font-weight: 600;
-        color: #94a3b8; /* Warna abu-abu teks label */
+        color: #94a3b8;
         text-align: left;
         padding-right: 10px;
     }
 
-    /* Jika ada tombol aksi di dalam tabel (seperti hapus/kirim WA), buat melebar penuh */
-    table td .btn-action, 
-    table td button {
-        width: 100% !important;
-        height: 40px !important;
-        margin-top: 4px;
+    /* --- 5b. Mengizinkan Scroll Horizontal khusus Form Table (.main-table & .session-table) --- */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Scroll halus di iOS */
+        margin-top: 15px;
+        padding-bottom: 8px;
+    }
+
+    .main-table, .session-table {
+        min-width: 600px; /* Memaksa tabel input tetap lebar di dalam container scroll */
     }
 
     /* --- 6. Sistem Navigasi Sidebar (Laci Samping) --- */
 
-    /* Tombol Hamburger di Pojok Atas Header Mobile */
+    /* Tombol Hamburger */
     .menu-toggle-btn {
-        display: block !important; /* Kita paksa muncul hanya di layar HP */
+        display: block !important;
         font-size: 24px;
         background: none;
         border: none;
         color: #ffffff;
         cursor: pointer;
         padding: 8px;
-        z-index: 1001; /* Di atas segalanya */
+        z-index: 1001;
     }
 
-    /* Mengubah Sidebar PC Menjadi Laci Tersembunyi */
+    /* Sidebar sebagai Laci Tersembunyi */
     .sidebar {
         position: fixed !important;
         top: 0;
-        left: -280px; /* Kita geser keluar layar sebelah kiri agar sembunyi */
+        left: -280px; /* Geser keluar layar */
         width: 260px;
         height: 100vh;
-        background-color: #1e293b !important; /* Senada dengan tema gelap */
-        z-index: 9999; /* Sangat tinggi agar menutupi konten utama saat terbuka */
-        transition: left 0.3s ease-in-out; /* Animasi geser yang mulus */
+        background-color: #1e293b !important;
+        z-index: 9999;
+        transition: left 0.3s ease-in-out;
         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
         padding: 20px;
         box-sizing: border-box;
     }
 
-    /* Kelas aktif ketika tombol menu diklik (diaktifkan lewat JavaScript) */
+    /* Sidebar Aktif */
     .sidebar.active {
-        left: 0; /* Menggeser kembali sidebar ke dalam layar */
+        left: 0;
     }
 
-    /* Efek Gelap Transparan di Layar Belakang saat Menu Terbuka */
+    /* Overlay Gelap di Belakang */
     .sidebar-overlay {
-        display: none; /* Default tersembunyi */
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(15, 23, 42, 0.75); /* Warna dasar gelap transparan */
-        backdrop-filter: blur(4px); /* Efek blur estetik pada background */
-        z-index: 9998; /* Berada tepat di bawah sidebar, tapi di atas konten utama */
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(4px);
+        z-index: 9998;
     }
 
-    /* Aktifkan overlay saat menu terbuka */
     .sidebar-overlay.active {
         display: block;
     }
-
 }
