@@ -771,3 +771,47 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.addEventListener("click", toggleMenu);
     }
 });
+
+// =======================================================
+// 📱 LOGIKA SIDEPANEL UNTUK HP (MOBILE INTERACTION)
+// =======================================================
+document.addEventListener("DOMContentLoaded", function () {
+    // Jalankan kode ini hanya jika layar berukuran HP (maksimal lebar 768px)
+    if (window.innerWidth <= 768) {
+        
+        // 1. Buat elemen Overlay Gelap secara otomatis di belakang sidebar jika belum ada di HTML
+        let overlay = document.querySelector(".sidebar-overlay");
+        if (!overlay) {
+            overlay = document.createElement("div");
+            overlay.className = "sidebar-overlay";
+            document.body.appendChild(overlay);
+        }
+
+        const sidebar = document.querySelector(".sidebar");
+        const toggleBtn = document.getElementById("menuToggle") || document.querySelector(".menu-toggle-btn");
+
+        if (toggleBtn && sidebar) {
+            // Fungsi untuk buka dan tutup menu laci
+            function toggleMenu() {
+                sidebar.classList.toggle("active");
+                overlay.classList.toggle("active");
+                
+                // Variasi isi tombol (bisa diganti ikon silang "✕" saat menu terbuka)
+                if (sidebar.classList.contains("active")) {
+                    toggleBtn.innerHTML = "✕"; // Mengubah tombol menu menjadi silang (close)
+                } else {
+                    toggleBtn.innerHTML = "☰"; // Mengembalikan tombol menjadi hamburger jika tertutup
+                }
+            }
+
+            // Daftarkan aksi klik/sentuh pada tombol hamburger
+            toggleBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // Tutup sidebar otomatis jika Coach mengetuk area gelap (overlay) di luar laci menu
+            overlay.addEventListener("click", toggleMenu);
+        }
+    }
+});
