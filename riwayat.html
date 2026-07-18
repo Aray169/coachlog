@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Program — CoachLog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- FULL-SCREEN APLIKASI DI HP -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CoachLog">
+</head>
+<body>
+
+    <!-- OVERLAY LATAR BELAKANG -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <div class="sidebar" id="sidebarMenu">
+        <div>
+            <div class="brand">
+                <i class='bx bx-dumbbell'></i>
+                <span>CoachLog.</span>
+            </div>
+            <ul class="menu-list">
+                <li>
+                    <a href="index.html" class="menu-item">
+                        <i class='bx bx-edit-alt'></i>
+                        <span>Input Program</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="riwayat.html" class="menu-item active">
+                        <i class='bx bx-history'></i>
+                        <span>Daftar Program</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="klien.html" class="menu-item">
+                        <i class='bx bx-group'></i>
+                        <span>Daftar Klien</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="pengaturan.html" class="menu-item">
+                        <i class='bx bx-cog'></i>
+                        <span>Pengaturan</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="user-profile">
+            <i class='bx bxs-user-circle'></i>
+            <div class="user-info">
+                <h4>Head Coach</h4>
+                <p>Internal Operator</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTENT -->
+    <div class="main-content container">
+        <div class="page-header" style="display: flex; align-items: center; gap: 12px;">
+            <button class="menu-toggle-btn" id="menuToggleBtn" style="display: none;">
+                <i class='bx bx-menu'></i>
+            </button>
+            <div>
+                <h2>Daftar Program & Riwayat</h2>
+                <p>Pantau status program latihan klien dan kelola pengiriman nota secara berkala.</p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <!-- DATA TABLE: Di HP otomatis berubah jadi susunan kartu yang rapi -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Klien</th>
+                        <th>Jumlah Sesi</th>
+                        <th>Total Biaya</th>
+                        <th>Status</th>
+                        <th style="text-align: center;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="riwayat-tbody">
+                    <!-- Contoh Data dengan Atribut data-label untuk HP -->
+                    <tr>
+                        <td data-label="No">1</td>
+                        <td data-label="Nama Klien">Budi Santoso</td>
+                        <td data-label="Jumlah Sesi">4 Sesi</td>
+                        <td data-label="Total Biaya">Rp 600.000</td>
+                        <td data-label="Status"><span class="badge badge-success">Lunas</span></td>
+                        <td data-label="Aksi" style="text-align: center;">
+                            <button class="btn" style="height: auto; padding: 6px 12px; font-size: 13px;">Detail</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script Laci Menu HP
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggleBtn = document.getElementById('menuToggleBtn');
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+        }
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
